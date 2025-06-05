@@ -1,0 +1,31 @@
+CREATE DATABASE QLSinhVien;
+GO
+USE QLSinhVien;
+GO
+CREATE TABLE SinhVien (
+    MaSinhVien VARCHAR(20) PRIMARY KEY,
+    TenSinhVien NVARCHAR(100),
+    QueQuan NVARCHAR(100),
+    NgaySinh VARCHAR(20),
+    GioiTinh NVARCHAR(10)
+);
+
+CREATE TABLE MonHoc (
+    MaMonHoc VARCHAR(20) PRIMARY KEY,
+    TenMonHoc NVARCHAR(100),
+    SoTin INT
+);
+
+CREATE TABLE HocTap (
+    MaSV VARCHAR(20),
+    MaMH VARCHAR(20),
+    TinChi INT,
+    DiemThi FLOAT,
+    PRIMARY KEY (MaSV, MaMH),
+    FOREIGN KEY (MaSV) REFERENCES SinhVien(MaSinhVien),
+    FOREIGN KEY (MaMH) REFERENCES MonHoc(MaMonHoc)
+);
+
+SELECT * FROM MonHoc;
+SELECT * FROM SinhVien;
+
