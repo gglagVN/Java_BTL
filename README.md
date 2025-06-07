@@ -37,7 +37,7 @@
 7. Mở SQL Studio , đăng nhập với sql authentication , user/pass : sa/123456789 , trust authentication => đăng nhập thành công và có thể chạy file java kết nối với sql .
 
 > **Note**
-KHÔNG VÀO ĐƯỢC THÌ HẾT CỨU ĐỪNG HỎI T :)) T GIẤU NGHỀ , CHÚNG M NGU THẬT - KHÔI NGUYỄN
+KHÔNG VÀO ĐƯỢC THÌ HẾT CỨU ĐỪNG HỎI T :)) GIẤU CC BUỔI LINH SỬA ÍT THÔI - KHÔI NGUYỄN
 
 ## Download
 
