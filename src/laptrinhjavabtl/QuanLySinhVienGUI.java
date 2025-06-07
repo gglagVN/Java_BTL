@@ -4,8 +4,9 @@
  */
 package laptrinhjavabtl;
 
-
-
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -14,27 +15,27 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 
-
 /**
  *
  * @author admin
  */
 public class QuanLySinhVienGUI extends javax.swing.JFrame {
 
-DefaultTableModel tableModelSinhVien;
-DefaultTableModel tableModelMonHoc;
-DefaultTableModel tableModelHocTap;
-SinhVien sv;
-ArrayList<MonHoc> listmh;
-MonHoc mh;
-ArrayList<HocTap> listht;
-HocTap ht;
-int kiemTra = -1;
+    DefaultTableModel tableModelSinhVien;
+    DefaultTableModel tableModelMonHoc;
+    DefaultTableModel tableModelHocTap;
+    SinhVien sv;
+    ArrayList<MonHoc> listmh;
+    MonHoc mh;
+    ArrayList<HocTap> listht;
+    HocTap ht;
+    int kiemTra = -1;
     /**
      * Creates new form QuanLySinhVienGUI
      */
     private static QuanLySinhVienGUI instance;
     ArrayList<SinhVien> list;
+
     public QuanLySinhVienGUI() {
         initComponents();
         tabNavigate.setVisible(false);
@@ -45,121 +46,123 @@ int kiemTra = -1;
     }
 
     public static QuanLySinhVienGUI getInstance() {
-    return instance;
-}
-    
+        return instance;
+    }
+
     public void docSinhVienTuSQL() {
-    list.clear();
-    try (Connection conn = DBConnection.getConnection()) {
-        String sql = "SELECT * FROM SinhVien";
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            SinhVien sv = new SinhVien();
-            sv.setMaSinhVien(rs.getString("MaSinhVien"));
-            sv.setTenSinhVien(rs.getString("TenSinhVien"));
-            sv.setQueQuan(rs.getString("QueQuan"));
-            sv.setNgaySinh(rs.getString("NgaySinh"));
-            sv.setGioiTinh(rs.getString("GioiTinh"));
-            list.add(sv);
+        list.clear();
+        try (Connection conn = DBConnection.getConnection()) {
+            String sql = "SELECT * FROM SinhVien";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                SinhVien sv = new SinhVien();
+                sv.setMaSinhVien(rs.getString("MaSinhVien"));
+                sv.setTenSinhVien(rs.getString("TenSinhVien"));
+                sv.setQueQuan(rs.getString("QueQuan"));
+                sv.setNgaySinh(rs.getString("NgaySinh"));
+                sv.setGioiTinh(rs.getString("GioiTinh"));
+                list.add(sv);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
-    } catch (SQLException ex) {
-        ex.printStackTrace();
     }
-}
-    
+
     public void docMonHocTuSQL() {
-    listmh.clear();
-    try (Connection conn = DBConnection.getConnection()) {
-        String sql = "SELECT * FROM MonHoc";
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            MonHoc mh = new MonHoc();
-            mh.setMaMonHoc(rs.getString("MaMonHoc"));
-            mh.setTenMonHoc(rs.getString("TenMonHoc"));
-            mh.setSoTin(rs.getInt("SoTin"));
-            listmh.add(mh);
+        listmh.clear();
+        try (Connection conn = DBConnection.getConnection()) {
+            String sql = "SELECT * FROM MonHoc";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                MonHoc mh = new MonHoc();
+                mh.setMaMonHoc(rs.getString("MaMonHoc"));
+                mh.setTenMonHoc(rs.getString("TenMonHoc"));
+                mh.setSoTin(rs.getInt("SoTin"));
+                listmh.add(mh);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
-    } catch (SQLException ex) {
-        ex.printStackTrace();
     }
-}
 
     public void docHocTapTuSQL() {
-    listht.clear();
-    try (Connection conn = DBConnection.getConnection()) {
-        String sql = "SELECT * FROM HocTap";
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            HocTap ht = new HocTap();
-            ht.setMaSV(rs.getString("MaSV"));
-            ht.setMaMH(rs.getString("MaMH"));
-            ht.setTinChi(rs.getInt("TinChi"));
-            ht.setDiemThi(rs.getDouble("DiemThi"));
-            listht.add(ht);
+        listht.clear();
+        try (Connection conn = DBConnection.getConnection()) {
+            String sql = "SELECT * FROM HocTap";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                HocTap ht = new HocTap();
+                ht.setMaSV(rs.getString("MaSV"));
+                ht.setMaMH(rs.getString("MaMH"));
+                ht.setTinChi(rs.getInt("TinChi"));
+                ht.setDiemThi(rs.getDouble("DiemThi"));
+                listht.add(ht);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
-    } catch (SQLException ex) {
-        ex.printStackTrace();
     }
-}
-    
-    public void QuanLySinhVien(){
+
+    public void QuanLySinhVien() {
         list = new ArrayList();
-        String[] columnsName = {"Mã sinh viên","Tên sinh viên","Quê quán","Ngày sinh","Giới tính"};
-        tableModelSinhVien = new DefaultTableModel(columnsName,0);
+        String[] columnsName = {"Mã sinh viên", "Tên sinh viên", "Quê quán", "Ngày sinh", "Giới tính"};
+        tableModelSinhVien = new DefaultTableModel(columnsName, 0);
         docSinhVienTuSQL();
         hienThiLenBang();
     }
-    
-    public void hienThiLenBang(){
+
+    public void hienThiLenBang() {
+        docSinhVienTuSQL();
         tableModelSinhVien.setRowCount(0);
         for (SinhVien sv : list) {
-            Object[] row = {sv.getMaSinhVien(),sv.getTenSinhVien(),sv.getQueQuan(),sv.getNgaySinh(),sv.getGioiTinh()};
+            Object[] row = {sv.getMaSinhVien(), sv.getTenSinhVien(), sv.getQueQuan(), sv.getNgaySinh(), sv.getGioiTinh()};
             tableModelSinhVien.addRow(row);
         }
         svtbDanhSach.setModel(tableModelSinhVien);
     }
-    
-    public void QuanLyMonHoc(){
+
+    public void QuanLyMonHoc() {
         listmh = new ArrayList();
-        String[] columnsName = {"Mã môn học","Tên môn học","Số Tín"};
-        tableModelMonHoc = new DefaultTableModel(columnsName,0);
+        String[] columnsName = {"Mã môn học", "Tên môn học", "Số Tín"};
+        tableModelMonHoc = new DefaultTableModel(columnsName, 0);
         docMonHocTuSQL();
         hienThiLenBangMH();
     }
-    public void hienThiLenBangMH(){
+
+    public void hienThiLenBangMH() {
+        docMonHocTuSQL();
         tableModelMonHoc.setRowCount(0);
         for (MonHoc mh : listmh) {
-            Object[] row = {mh.getMaMonHoc(),mh.getTenMonHoc(),mh.getSoTin()};
+            Object[] row = {mh.getMaMonHoc(), mh.getTenMonHoc(), mh.getSoTin()};
             tableModelMonHoc.addRow(row);
         }
         mhtbMonHoc.setModel(tableModelMonHoc);
     }
-    
-    public void QuanLyHocTap(){
+
+    public void QuanLyHocTap() {
         listht = new ArrayList();
-        String[] columnsName = {"Mã môn học","Số tín","Điểm"};
-        tableModelHocTap = new DefaultTableModel(columnsName,0);
-        docHocTapTuSQL();
+        String[] columnsName = {"Mã môn học", "Số tín", "Điểm"};
+        tableModelHocTap = new DefaultTableModel(columnsName, 0);
         hienThiLenBangHT();
     }
-    
-public void hienThiLenBangHT() {
-    String maSV = httxtMaSinhVien.getText().trim();
 
-    tableModelHocTap.setRowCount(0);
-    for (HocTap ht : listht) {
-        if (ht.getMaSV().equalsIgnoreCase(maSV)) { 
-            Object[] row = {ht.getMaMH(), ht.getTinChi(), ht.getDiemThi()};
-            tableModelHocTap.addRow(row);
+    public void hienThiLenBangHT() {
+        String maSV = httxtMaSinhVien.getText().trim();
+        docHocTapTuSQL();
+        tableModelHocTap.setRowCount(0);
+        for (HocTap ht : listht) {
+            if (ht.getMaSV().equalsIgnoreCase(maSV)) {
+                Object[] row = {ht.getMaMH(), ht.getTinChi(), ht.getDiemThi()};
+                tableModelHocTap.addRow(row);
+            }
         }
+
+        htTbDiemThi.setModel(tableModelHocTap);
     }
 
-    htTbDiemThi.setModel(tableModelHocTap);
-}
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -199,7 +202,7 @@ public void hienThiLenBangHT() {
         jLabel3 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         httxtMaSinhVien = new javax.swing.JTextField();
-        htbtTimKiem = new javax.swing.JButton();
+        htbtThem = new javax.swing.JButton();
         jLabel16 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         htTbDiemThi = new javax.swing.JTable();
@@ -207,7 +210,8 @@ public void hienThiLenBangHT() {
         jLabel18 = new javax.swing.JLabel();
         httxtDiem = new javax.swing.JTextField();
         htbtTinhTB = new javax.swing.JButton();
-        htbtHienThi = new javax.swing.JButton();
+        htbtTimKiem = new javax.swing.JButton();
+        htbtPrint = new javax.swing.JButton();
         tabQuanLyMonHoc = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -260,6 +264,7 @@ public void hienThiLenBangHT() {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 153, 0));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/education.png"))); // NOI18N
         jLabel1.setText("QUẢN LÝ SINH VIÊN");
 
         jLabel4.setText("Mã sinh viên");
@@ -319,6 +324,8 @@ public void hienThiLenBangHT() {
         });
         jScrollPane1.setViewportView(svtbDanhSach);
 
+        svbtTimKiem.setBackground(new java.awt.Color(255, 255, 204));
+        svbtTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search.png"))); // NOI18N
         svbtTimKiem.setText("Tìm kiếm");
         svbtTimKiem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -326,6 +333,8 @@ public void hienThiLenBangHT() {
             }
         });
 
+        svbtSua.setBackground(new java.awt.Color(255, 255, 204));
+        svbtSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/repair.png"))); // NOI18N
         svbtSua.setText("Sửa");
         svbtSua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -333,6 +342,8 @@ public void hienThiLenBangHT() {
             }
         });
 
+        svbtXoa.setBackground(new java.awt.Color(255, 255, 204));
+        svbtXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Delete.png"))); // NOI18N
         svbtXoa.setText("Xoá");
         svbtXoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -340,6 +351,8 @@ public void hienThiLenBangHT() {
             }
         });
 
+        svbtThem.setBackground(new java.awt.Color(255, 255, 204));
+        svbtThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add.png"))); // NOI18N
         svbtThem.setText("Thêm");
         svbtThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -363,7 +376,12 @@ public void hienThiLenBangHT() {
                         .addGroup(tabQuanLySinhVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(svcbQueQuan, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(tabQuanLySinhVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(svbtXoa)
+                                .addGroup(tabQuanLySinhVienLayout.createSequentialGroup()
+                                    .addComponent(svbtTimKiem)
+                                    .addGap(66, 66, 66)
+                                    .addComponent(svbtSua)
+                                    .addGap(63, 63, 63)
+                                    .addComponent(svbtXoa))
                                 .addGroup(tabQuanLySinhVienLayout.createSequentialGroup()
                                     .addGroup(tabQuanLySinhVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(svtxtTenSinhVien, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -384,15 +402,11 @@ public void hienThiLenBangHT() {
                         .addComponent(jLabel1))
                     .addGroup(tabQuanLySinhVienLayout.createSequentialGroup()
                         .addGap(142, 142, 142)
-                        .addComponent(svbtThem)
-                        .addGap(109, 109, 109)
-                        .addComponent(svbtTimKiem)
-                        .addGap(76, 76, 76)
-                        .addComponent(svbtSua))
+                        .addComponent(svbtThem))
                     .addGroup(tabQuanLySinhVienLayout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 795, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
         tabQuanLySinhVienLayout.setVerticalGroup(
             tabQuanLySinhVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -424,7 +438,7 @@ public void hienThiLenBangHT() {
                     .addComponent(svbtThem))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         tabNavigate.addTab("Quản lý sinh viên", tabQuanLySinhVien);
@@ -434,6 +448,8 @@ public void hienThiLenBangHT() {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 153, 51));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/grade.png"))); // NOI18N
         jLabel3.setText("QUẢN LÝ ĐIỂM");
 
         jLabel14.setText("Mã sinh viên");
@@ -444,10 +460,12 @@ public void hienThiLenBangHT() {
             }
         });
 
-        htbtTimKiem.setText("Thêm");
-        htbtTimKiem.addActionListener(new java.awt.event.ActionListener() {
+        htbtThem.setBackground(new java.awt.Color(255, 255, 204));
+        htbtThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add.png"))); // NOI18N
+        htbtThem.setText("Thêm");
+        htbtThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                htbtTimKiemActionPerformed(evt);
+                htbtThemActionPerformed(evt);
             }
         });
 
@@ -479,6 +497,8 @@ public void hienThiLenBangHT() {
 
         jLabel18.setText("Điểm");
 
+        htbtTinhTB.setBackground(new java.awt.Color(255, 255, 204));
+        htbtTinhTB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/calculation.png"))); // NOI18N
         htbtTinhTB.setText("Tính điểm TB");
         htbtTinhTB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -486,10 +506,21 @@ public void hienThiLenBangHT() {
             }
         });
 
-        htbtHienThi.setText("Hiển thị");
-        htbtHienThi.addActionListener(new java.awt.event.ActionListener() {
+        htbtTimKiem.setBackground(new java.awt.Color(255, 255, 204));
+        htbtTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search.png"))); // NOI18N
+        htbtTimKiem.setText("Tìm kiếm");
+        htbtTimKiem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                htbtHienThiActionPerformed(evt);
+                htbtTimKiemActionPerformed(evt);
+            }
+        });
+
+        htbtPrint.setBackground(new java.awt.Color(255, 255, 204));
+        htbtPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/printer.png"))); // NOI18N
+        htbtPrint.setText("In bằng khen");
+        htbtPrint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                htbtPrintActionPerformed(evt);
             }
         });
 
@@ -497,37 +528,44 @@ public void hienThiLenBangHT() {
         tabQuanLyDiem.setLayout(tabQuanLyDiemLayout);
         tabQuanLyDiemLayout.setHorizontalGroup(
             tabQuanLyDiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tabQuanLyDiemLayout.createSequentialGroup()
-                .addGap(316, 316, 316)
-                .addComponent(htbtTimKiem)
-                .addGap(87, 87, 87)
-                .addComponent(htbtHienThi, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
-                .addComponent(htbtTinhTB)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabQuanLyDiemLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(tabQuanLyDiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(tabQuanLyDiemLayout.createSequentialGroup()
-                        .addGap(181, 181, 181)
-                        .addComponent(jLabel3))
-                    .addGroup(tabQuanLyDiemLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(tabQuanLyDiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel14)
                             .addComponent(jLabel16))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(tabQuanLyDiemLayout.createSequentialGroup()
+                        .addGap(136, 136, 136)
+                        .addComponent(htbtThem)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(tabQuanLyDiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(tabQuanLyDiemLayout.createSequentialGroup()
                         .addGroup(tabQuanLyDiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(httxtMaMon)
                             .addComponent(httxtMaSinhVien, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(41, 41, 41)
                         .addComponent(jLabel18)
                         .addGap(18, 18, 18)
-                        .addComponent(httxtDiem, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(251, 251, 251))
+                        .addComponent(httxtDiem, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(tabQuanLyDiemLayout.createSequentialGroup()
+                        .addComponent(htbtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(htbtTinhTB)
+                        .addGap(16, 16, 16)))
+                .addGap(26, 26, 26)
+                .addComponent(htbtPrint)
+                .addGap(150, 150, 150))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabQuanLyDiemLayout.createSequentialGroup()
-                .addContainerGap(113, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 652, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(98, 98, 98))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(tabQuanLyDiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabQuanLyDiemLayout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 652, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(98, 98, 98))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabQuanLyDiemLayout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(345, 345, 345))))
         );
         tabQuanLyDiemLayout.setVerticalGroup(
             tabQuanLyDiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -546,9 +584,10 @@ public void hienThiLenBangHT() {
                     .addComponent(httxtMaMon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(tabQuanLyDiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(htbtTimKiem)
+                    .addComponent(htbtThem)
                     .addComponent(htbtTinhTB)
-                    .addComponent(htbtHienThi))
+                    .addComponent(htbtTimKiem)
+                    .addComponent(htbtPrint))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -561,6 +600,7 @@ public void hienThiLenBangHT() {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(51, 153, 0));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/subject.png"))); // NOI18N
         jLabel2.setText("QUẢN LÝ MÔN HỌC");
 
         jLabel10.setText("Mã môn học");
@@ -594,6 +634,8 @@ public void hienThiLenBangHT() {
         });
         jScrollPane2.setViewportView(mhtbMonHoc);
 
+        mhbtTimKiem.setBackground(new java.awt.Color(255, 255, 204));
+        mhbtTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search.png"))); // NOI18N
         mhbtTimKiem.setText("Tìm kiếm");
         mhbtTimKiem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -601,6 +643,8 @@ public void hienThiLenBangHT() {
             }
         });
 
+        mhbtSua.setBackground(new java.awt.Color(255, 255, 204));
+        mhbtSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/repair.png"))); // NOI18N
         mhbtSua.setText("Sửa");
         mhbtSua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -608,6 +652,8 @@ public void hienThiLenBangHT() {
             }
         });
 
+        mhbtXoa.setBackground(new java.awt.Color(255, 255, 204));
+        mhbtXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Delete.png"))); // NOI18N
         mhbtXoa.setText("Xoá");
         mhbtXoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -615,6 +661,8 @@ public void hienThiLenBangHT() {
             }
         });
 
+        mhbtThem.setBackground(new java.awt.Color(255, 255, 204));
+        mhbtThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add.png"))); // NOI18N
         mhbtThem.setText("Thêm");
         mhbtThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -627,26 +675,18 @@ public void hienThiLenBangHT() {
         tabQuanLyMonHocLayout.setHorizontalGroup(
             tabQuanLyMonHocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabQuanLyMonHocLayout.createSequentialGroup()
-                .addGap(0, 102, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(mhbtThem)
-                .addGap(73, 73, 73)
-                .addComponent(mhbtTimKiem)
-                .addGap(161, 161, 161)
+                .addGap(299, 299, 299)
                 .addComponent(mhbtSua)
-                .addGap(93, 93, 93)
+                .addGap(98, 98, 98)
                 .addComponent(mhbtXoa)
-                .addGap(140, 140, 140))
+                .addGap(130, 130, 130))
             .addGroup(tabQuanLyMonHocLayout.createSequentialGroup()
                 .addGroup(tabQuanLyMonHocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(tabQuanLyMonHocLayout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 747, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(tabQuanLyMonHocLayout.createSequentialGroup()
                         .addGap(274, 274, 274)
                         .addGroup(tabQuanLyMonHocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(tabQuanLyMonHocLayout.createSequentialGroup()
-                                .addGap(66, 66, 66)
-                                .addComponent(jLabel2))
                             .addGroup(tabQuanLyMonHocLayout.createSequentialGroup()
                                 .addGroup(tabQuanLyMonHocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel10)
@@ -656,15 +696,22 @@ public void hienThiLenBangHT() {
                                 .addGroup(tabQuanLyMonHocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(mhtxtMaMonHoc, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(mhtxtTenMonHoc, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(mhcbSoTin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(mhcbSoTin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(mhbtTimKiem)))
+                    .addGroup(tabQuanLyMonHocLayout.createSequentialGroup()
+                        .addGap(312, 312, 312)
+                        .addComponent(jLabel2))
+                    .addGroup(tabQuanLyMonHocLayout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 727, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
         tabQuanLyMonHocLayout.setVerticalGroup(
             tabQuanLyMonHocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tabQuanLyMonHocLayout.createSequentialGroup()
-                .addContainerGap(32, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(jLabel2)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(tabQuanLyMonHocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(mhtxtMaMonHoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -707,18 +754,20 @@ public void hienThiLenBangHT() {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tabNavigate, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tabNavigate))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tabNavigate, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(tabNavigate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    
+
     private void menuItemQuanLySVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemQuanLySVActionPerformed
         DangNhapForm sv = new DangNhapForm();
         sv.setVisible(true);
@@ -745,14 +794,14 @@ public void hienThiLenBangHT() {
     }//GEN-LAST:event_httxtMaSinhVienActionPerformed
 
     private int searchMaSinhVien(String ma) {
-    for (int i = 0; i < list.size(); i++) {
-        if (ma.equalsIgnoreCase(list.get(i).getMaSinhVien())) {
-            return i;
+        for (int i = 0; i < list.size(); i++) {
+            if (ma.equalsIgnoreCase(list.get(i).getMaSinhVien())) {
+                return i;
+            }
         }
+        return -1; // không tìm thấy
     }
-    return -1; // không tìm thấy
-    }
-    
+
     private void svbtThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_svbtThemActionPerformed
         kiemTra = -1;
         kiemTra = searchMaSinhVien(svtxtMaSinhVien.getText());
@@ -760,36 +809,36 @@ public void hienThiLenBangHT() {
         sv.setMaSinhVien(svtxtMaSinhVien.getText());
         sv.setTenSinhVien(svtxtTenSinhVien.getText());
         sv.setNgaySinh(svtxtNgaySinh.getText());
-        sv.setQueQuan((String)svcbQueQuan.getSelectedItem());
-        if(svrbtNam.isSelected())
+        sv.setQueQuan((String) svcbQueQuan.getSelectedItem());
+        if (svrbtNam.isSelected()) {
             sv.setGioiTinh("Nam");
-        if(svrbtNu.isSelected())
+        }
+        if (svrbtNu.isSelected()) {
             sv.setGioiTinh("Nữ");
+        }
         if (svtxtMaSinhVien.getText().equals("")) {
-        JOptionPane.showMessageDialog(null, "Vui lòng nhập mã sinh viên");
-        return;
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập mã sinh viên");
+            return;
         }
-        if(kiemTra > -1)
-        {
+        if (kiemTra > -1) {
             JOptionPane.showMessageDialog(null, "Mã sinh viên đã tồn tại");
-        }
-        else
-        {
+        } else {
             list.add(sv);
+            try (Connection conn = DBConnection.getConnection()) {
+                String sql = "INSERT INTO SinhVien (MaSinhVien, TenSinhVien, QueQuan, NgaySinh, GioiTinh) VALUES (?, ?, ?, ?, ?)";
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ps.setString(1, sv.getMaSinhVien());
+                ps.setString(2, sv.getTenSinhVien());
+                ps.setString(3, sv.getQueQuan());
+                ps.setString(4, sv.getNgaySinh());
+                ps.setString(5, sv.getGioiTinh());
+                ps.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Thêm thành công!");
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Lỗi lưu sinh viên vào SQL: " + ex.getMessage());
+            }
         }
-        try (Connection conn = DBConnection.getConnection()) {
-    String sql = "INSERT INTO SinhVien (MaSinhVien, TenSinhVien, QueQuan, NgaySinh, GioiTinh) VALUES (?, ?, ?, ?, ?)";
-    PreparedStatement ps = conn.prepareStatement(sql);
-    ps.setString(1, sv.getMaSinhVien());
-    ps.setString(2, sv.getTenSinhVien());
-    ps.setString(3, sv.getQueQuan());
-    ps.setString(4, sv.getNgaySinh());
-    ps.setString(5, sv.getGioiTinh());
-    ps.executeUpdate();
-    } catch (SQLException ex) {
-        ex.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Lỗi lưu sinh viên vào SQL: " + ex.getMessage());
-    }   
         hienThiLenBang();
     }//GEN-LAST:event_svbtThemActionPerformed
 
@@ -799,267 +848,327 @@ public void hienThiLenBangHT() {
 
     private void svbtTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_svbtTimKiemActionPerformed
         kiemTra = -1;
-        if (svtxtMaSinhVien.getText().equals(""))
-        {
+        if (svtxtMaSinhVien.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Nhập mã sinh viên để tìm kiếm ");
             return;
         }
         kiemTra = searchMaSinhVien(svtxtMaSinhVien.getText());
         sv = list.get(kiemTra);
-        if (kiemTra > -1)
-        {
+        if (kiemTra > -1) {
             JOptionPane.showMessageDialog(null, "Mã Sinh viên: " + sv.getMaSinhVien() + "\nHọ và tên: " + sv.getTenSinhVien() + "\nGiới tính: " + sv.getGioiTinh() + "\nNgày sinh: " + sv.getNgaySinh() + "\nQuê quán: " + sv.getQueQuan());
         }
     }//GEN-LAST:event_svbtTimKiemActionPerformed
 
     private void svbtSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_svbtSuaActionPerformed
         kiemTra = -1;
-        if (svtxtMaSinhVien.getText().equals(""))
-        {
-            JOptionPane.showMessageDialog(null, "Nhập mã sinh viên để Xoá ");
+        if (svtxtMaSinhVien.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Nhập mã sinh viên để sửa ");
             return;
         }
         kiemTra = searchMaSinhVien(svtxtMaSinhVien.getText());
-        sv = list.get(kiemTra);
-        if (kiemTra > -1)
-        {
+        if (kiemTra > -1) {
+            sv = list.get(kiemTra);
             sv.setMaSinhVien(svtxtMaSinhVien.getText());
             sv.setTenSinhVien(svtxtTenSinhVien.getText());
             sv.setNgaySinh(svtxtNgaySinh.getText());
-            sv.setQueQuan((String)svcbQueQuan.getSelectedItem());
-        if(svrbtNam.isSelected())
-            sv.setGioiTinh("Nam");
-        if(svrbtNu.isSelected())
-            sv.setGioiTinh("Nữ");
+            sv.setQueQuan((String) svcbQueQuan.getSelectedItem());
+            if (svrbtNam.isSelected()) {
+                sv.setGioiTinh("Nam");
+            }
+            if (svrbtNu.isSelected()) {
+                sv.setGioiTinh("Nữ");
+            }
+            try (Connection conn = DBConnection.getConnection()) {
+                String sql = "UPDATE SinhVien SET tenSinhVien = ?, ngaySinh = ?, queQuan = ?, gioiTinh = ? WHERE maSinhVien = ?";
+                PreparedStatement ps = conn.prepareStatement(sql);
+
+                ps.setString(1, sv.getTenSinhVien());
+                ps.setString(2, sv.getNgaySinh());
+                ps.setString(3, sv.getQueQuan());
+                ps.setString(4, sv.getGioiTinh());
+                ps.setString(5, sv.getMaSinhVien());
+
+                ps.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Sửa thành công!");
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Lỗi sửa thông tin sinh viên vào SQL: " + ex.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Mã sinh viên không tồn tại");
         }
         hienThiLenBang();
     }//GEN-LAST:event_svbtSuaActionPerformed
 
     private void svbtXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_svbtXoaActionPerformed
         kiemTra = -1;
-    if (svtxtMaSinhVien.getText().equals("")) {
-        JOptionPane.showMessageDialog(null, "Nhập mã sinh viên để Xoá ");
-        return;
-    }
-    kiemTra = searchMaSinhVien(svtxtMaSinhVien.getText());
-    sv = list.get(kiemTra);
-    if (kiemTra > -1) {
-        String maSV = sv.getMaSinhVien();
-      
-        try (Connection conn = DBConnection.getConnection()) {
-            String sqlDeleteHocTap = "DELETE FROM HocTap WHERE MaSV = ?";
-            PreparedStatement ps1 = conn.prepareStatement(sqlDeleteHocTap);
-            ps1.setString(1, maSV);
-            ps1.executeUpdate();
-
-            String sqlDeleteSinhVien = "DELETE FROM SinhVien WHERE MaSinhVien = ?";
-            PreparedStatement ps2 = conn.prepareStatement(sqlDeleteSinhVien);
-            ps2.setString(1, maSV);
-            ps2.executeUpdate();
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Lỗi xóa sinh viên trên SQL: " + ex.getMessage());
+        if (svtxtMaSinhVien.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Nhập mã sinh viên để xoá ");
+            return;
         }
+        kiemTra = searchMaSinhVien(svtxtMaSinhVien.getText());
+        if (kiemTra > -1) {
+            sv = list.get(kiemTra);
+            String maSV = sv.getMaSinhVien();
 
+            try (Connection conn = DBConnection.getConnection()) {
+                String sqlDeleteHocTap = "DELETE FROM HocTap WHERE MaSV = ?";
+                PreparedStatement ps1 = conn.prepareStatement(sqlDeleteHocTap);
+                ps1.setString(1, maSV);
+                ps1.executeUpdate();
 
-        list.remove(sv);
-    }
-    hienThiLenBang();
+                String sqlDeleteSinhVien = "DELETE FROM SinhVien WHERE MaSinhVien = ?";
+                PreparedStatement ps2 = conn.prepareStatement(sqlDeleteSinhVien);
+                ps2.setString(1, maSV);
+                ps2.executeUpdate();
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Lỗi xóa sinh viên trên SQL: " + ex.getMessage());
+            }
+            list.remove(sv);
+            JOptionPane.showMessageDialog(null, "Xoá thành công");
+        } else {
+            JOptionPane.showMessageDialog(null, "Mã sinh viên không tồn tại");
+        }
+        hienThiLenBang();
     }//GEN-LAST:event_svbtXoaActionPerformed
 
     private void svtbDanhSachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_svtbDanhSachMouseClicked
         int selectedRow = svtbDanhSach.getSelectedRow();
-        if(selectedRow>=0){
+        if (selectedRow >= 0) {
             svtxtMaSinhVien.setText(svtbDanhSach.getValueAt(selectedRow, 0).toString());
             svtxtTenSinhVien.setText(svtbDanhSach.getValueAt(selectedRow, 1).toString());
-            svtxtNgaySinh.setText(svtbDanhSach.getValueAt(selectedRow, 2).toString());
+            svtxtNgaySinh.setText(svtbDanhSach.getValueAt(selectedRow, 3).toString());
         }
     }//GEN-LAST:event_svtbDanhSachMouseClicked
-    
+
 // ----------------------------- MON HOC
-    private int searchMaMonHoc(String ma) {
-    for (int i = 0; i < listmh.size(); i++) {
-        if (ma.equalsIgnoreCase(listmh.get(i).getMaMonHoc())) {
-            return i;
+    public int searchMaMonHoc(String ma) {
+        for (int i = 0; i < listmh.size(); i++) {
+            if (listmh.get(i).getMaMonHoc().equalsIgnoreCase(ma)) {
+                return i;
+            }
         }
+        return -1;
     }
-    return -1;
-}
-    
+
+
     private void mhbtThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mhbtThemActionPerformed
         kiemTra = -1;
         kiemTra = searchMaMonHoc(mhtxtMaMonHoc.getText());
         mh = new MonHoc();
         mh.setMaMonHoc(mhtxtMaMonHoc.getText());
         mh.setTenMonHoc(mhtxtTenMonHoc.getText());
-        mh.setSoTin(mhcbSoTin.getSelectedIndex()+1);
+        mh.setSoTin(mhcbSoTin.getSelectedIndex() + 1);
         if (mhtxtMaMonHoc.getText().equals("")) {
-        JOptionPane.showMessageDialog(null, "Vui lòng nhập mã môn học");
-        return;
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập mã môn học");
+            return;
         }
-        if(kiemTra > -1)
-        {
+        if (kiemTra > -1) {
             JOptionPane.showMessageDialog(null, "Mã môn học đã tồn tại");
-        }
-        else
-        {
+        } else {
             listmh.add(mh);
             try (Connection conn = DBConnection.getConnection()) {
-    String sql = "INSERT INTO MonHoc (MaMonHoc, TenMonHoc, SoTin) VALUES (?, ?, ?)";
-    PreparedStatement ps = conn.prepareStatement(sql);
-    ps.setString(1, mh.getMaMonHoc());
-    ps.setString(2, mh.getTenMonHoc());
-    ps.setInt(3, mh.getSoTin());
-    ps.executeUpdate();
-} catch (SQLException ex) {
-    ex.printStackTrace();
-    JOptionPane.showMessageDialog(null, "Lỗi lưu môn học vào SQL: " + ex.getMessage());
-}
+                String sql = "INSERT INTO MonHoc (MaMonHoc, TenMonHoc, SoTin) VALUES (?, ?, ?)";
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ps.setString(1, mh.getMaMonHoc());
+                ps.setString(2, mh.getTenMonHoc());
+                ps.setInt(3, mh.getSoTin());
+                ps.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Thêm thành công");
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Lỗi lưu môn học vào SQL: " + ex.getMessage());
+            }
         }
         hienThiLenBangMH();
     }//GEN-LAST:event_mhbtThemActionPerformed
 
     private void mhbtTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mhbtTimKiemActionPerformed
         kiemTra = -1;
-        if (mhtxtMaMonHoc.getText().equals(""))
-        {
-            JOptionPane.showMessageDialog(null, "Nhập mã Môn học để tìm kiếm ");
+        if (mhtxtMaMonHoc.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Nhập mã môn học để tìm kiếm ");
             return;
         }
         kiemTra = searchMaMonHoc(mhtxtMaMonHoc.getText());
         mh = listmh.get(kiemTra);
-        if (kiemTra > -1)
-        {
-            JOptionPane.showMessageDialog(null, "Mã môn học: " + mh.getMaMonHoc() + "\nTên môn học: " + mh.getTenMonHoc() + "\nSố tín " + mh.getSoTin());
-        }
-        else 
-        {
+        if (kiemTra > -1) {
+            JOptionPane.showMessageDialog(null, "Mã môn học: " + mh.getMaMonHoc() + "\nTên môn học: " + mh.getTenMonHoc() + "\nSố tín: " + mh.getSoTin());
+        } else {
             JOptionPane.showMessageDialog(null, "Mã môn học chưa tồn tại");
         }
     }//GEN-LAST:event_mhbtTimKiemActionPerformed
 
     private void mhbtSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mhbtSuaActionPerformed
-        kiemTra = -1;
-        if (mhtxtMaMonHoc.getText().equals(""))
-        {
-            JOptionPane.showMessageDialog(null, "Nhập mã sinh viên để Xoá ");
+        String maMonHoc = mhtxtMaMonHoc.getText().trim();
+
+        if (maMonHoc.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập mã môn học để sửa.");
             return;
         }
-        kiemTra = searchMaMonHoc(mhtxtMaMonHoc.getText());
-        mh = listmh.get(kiemTra);
-        if (kiemTra > -1)
-        {
-            mh.setMaMonHoc(mhtxtMaMonHoc.getText());
-            mh.setTenMonHoc(mhtxtTenMonHoc.getText());
-            mh.setSoTin(mhcbSoTin.getSelectedIndex()+1);
+
+        int viTri = searchMaMonHoc(maMonHoc);
+
+        if (viTri < 0) {
+            JOptionPane.showMessageDialog(null, "Mã môn học không tồn tại.");
+            return;
         }
+
+        mh = listmh.get(viTri);
+        mh.setMaMonHoc(maMonHoc);
+        mh.setTenMonHoc(mhtxtTenMonHoc.getText().trim());
+        int soTin = mhcbSoTin.getSelectedIndex() + 1;
+        mh.setSoTin(soTin);
+        for (HocTap ht : listht) {
+            if (ht.getMaMH().equals(maMonHoc)) {
+                ht.setTinChi(soTin);
+            }
+        }
+        try (Connection conn = DBConnection.getConnection()) {
+
+            String sql = "UPDATE MonHoc SET tenMonHoc = ?, soTin = ? WHERE maMonHoc = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, mh.getTenMonHoc());
+            ps.setInt(2, mh.getSoTin());
+            ps.setString(3, mh.getMaMonHoc());
+            ps.executeUpdate();
+
+            String sql2 = "UPDATE HocTap SET tinChi = ? WHERE maMH = ?";
+            PreparedStatement ps2 = conn.prepareStatement(sql2);
+            ps2.setInt(1, mh.getSoTin());
+            ps2.setString(2, mh.getMaMonHoc());
+            ps2.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Sửa môn học thành công!");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Lỗi khi sửa môn học trong SQL: " + ex.getMessage());
+        }
+
         hienThiLenBangMH();
     }//GEN-LAST:event_mhbtSuaActionPerformed
 
     private void mhbtXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mhbtXoaActionPerformed
         kiemTra = -1;
-    if (mhtxtMaMonHoc.getText().equals("")) {
-        JOptionPane.showMessageDialog(null, "Nhập mã môn học để Xoá ");
-        return;
-    }
-    kiemTra = searchMaMonHoc(mhtxtMaMonHoc.getText());
-    mh = listmh.get(kiemTra);
-    if (kiemTra > -1) {
-        String maMH = mh.getMaMonHoc();
-        try (Connection conn = DBConnection.getConnection()) {
-            String sqlDeleteHocTap = "DELETE FROM HocTap WHERE MaMH = ?";
-            PreparedStatement ps1 = conn.prepareStatement(sqlDeleteHocTap);
-            ps1.setString(1, maMH);
-            ps1.executeUpdate();
-            String sqlDeleteMonHoc = "DELETE FROM MonHoc WHERE MaMonHoc = ?";
-            PreparedStatement ps2 = conn.prepareStatement(sqlDeleteMonHoc);
-            ps2.setString(1, maMH);
-            ps2.executeUpdate();
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Lỗi xóa môn học trên SQL: " + ex.getMessage());
+        if (mhtxtMaMonHoc.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Nhập mã môn học để xoá ");
+            return;
         }
-        listmh.remove(mh);
-    }
-    hienThiLenBangMH();
+        kiemTra = searchMaMonHoc(mhtxtMaMonHoc.getText());
+        if (kiemTra > -1) {
+            mh = listmh.get(kiemTra);
+            String maMH = mh.getMaMonHoc();
+
+            listmh.remove(mh);
+            try (Connection conn = DBConnection.getConnection()) {
+                String sqlDeleteHocTap = "DELETE FROM HocTap WHERE MaMH = ?";
+                PreparedStatement ps1 = conn.prepareStatement(sqlDeleteHocTap);
+                ps1.setString(1, maMH);
+                ps1.executeUpdate();
+                String sqlDeleteMonHoc = "DELETE FROM MonHoc WHERE MaMonHoc = ?";
+                PreparedStatement ps2 = conn.prepareStatement(sqlDeleteMonHoc);
+                ps2.setString(1, maMH);
+                ps2.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Xoá thành công");
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Lỗi xóa môn học trên SQL: " + ex.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Mã môn học không tồn tại");
+            return;
+        }
+        hienThiLenBangMH();
     }//GEN-LAST:event_mhbtXoaActionPerformed
 
     private void mhtbMonHocMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mhtbMonHocMouseClicked
         int selectedRow = mhtbMonHoc.getSelectedRow();
-        if(selectedRow>=0){
+        if (selectedRow >= 0) {
             mhtxtMaMonHoc.setText(mhtbMonHoc.getValueAt(selectedRow, 0).toString());
             mhtxtTenMonHoc.setText(mhtbMonHoc.getValueAt(selectedRow, 1).toString());
-            mhcbSoTin.setSelectedIndex((int)mhtbMonHoc.getValueAt(selectedRow, 1)-1);
+            int soTinChi = Integer.parseInt(mhtbMonHoc.getValueAt(selectedRow, 2).toString());
+            mhcbSoTin.setSelectedIndex(soTinChi - 1);
         }
     }//GEN-LAST:event_mhtbMonHocMouseClicked
 
-    private void htbtTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_htbtTimKiemActionPerformed
-String maSV = httxtMaSinhVien.getText().trim();
-String maMH = httxtMaMon.getText().trim();
-String diemThi = httxtDiem.getText().trim();
+    private void htbtThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_htbtThemActionPerformed
+        double diemThi;
+        String maSV = httxtMaSinhVien.getText().trim();
+        String maMH = httxtMaMon.getText().trim();
+        try {
+            diemThi = Double.parseDouble(httxtDiem.getText());
+            if (diemThi > 10 || diemThi < 0) {
+                JOptionPane.showMessageDialog(null, "Điểm phải <= 10 và >=0");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Điểm không hợp lệ. Vui lòng nhập số hợp lệ.");
+            return;
+        }
 
-if (maSV.isEmpty()) {
-    JOptionPane.showMessageDialog(null, "Vui lòng nhập mã sinh viên");
-    return;
-}
-if (maMH.isEmpty()) {
-    JOptionPane.showMessageDialog(null, "Vui lòng nhập mã môn học");
-    return;
-}
-if (diemThi.isEmpty()) {
-    JOptionPane.showMessageDialog(null, "Vui lòng nhập điểm");
-    return;
-}
+        if (maSV.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập mã sinh viên");
+            return;
+        }
+        if (maMH.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập mã môn học");
+            return;
+        }
 
-int kiemTraSV = searchMaSinhVien(maSV);
-int kiemTraMH = searchMaMonHoc(maMH);
+        int kiemTraSV = searchMaSinhVien(maSV);
+        int kiemTraMH = searchMaMonHoc(maMH);
 
-if (kiemTraSV == -1 || kiemTraMH == -1) {
-    JOptionPane.showMessageDialog(null, "Mã sinh viên hoặc mã môn học không tồn tại");
-    return;
-}
+        if (kiemTraSV == -1 || kiemTraMH == -1) {
+            JOptionPane.showMessageDialog(null, "Mã sinh viên hoặc mã môn học không tồn tại");
+            return;
+        }
 
-MonHoc mh = listmh.get(kiemTraMH);
-int soTin = mh.getSoTin();
+        mh = listmh.get(kiemTraMH);
+        int soTin = mh.getSoTin();
+        for (HocTap ht : listht) {
+            if (ht.getMaSV().equals(maSV) && ht.getMaMH().equals(maMH)) {
+                JOptionPane.showMessageDialog(null, "Sinh viên này đã có điểm môn học này");
+                return;
+            }
+        }
+        int result = JOptionPane.showConfirmDialog(
+                null,
+                "Sau khi thêm sẽ không sửa được điểm, bạn có chắc chắn muốn thêm dữ liệu này ?",
+                "Xác nhận",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+        );
+        if (result == JOptionPane.YES_OPTION) {
+            ht = new HocTap();
+            ht.setMaSV(maSV);
+            ht.setMaMH(maMH);
+            ht.setDiemThi(diemThi);
+            ht.setTinChi(soTin);
+            listht.add(ht);
+            try (Connection conn = DBConnection.getConnection()) {
+                String sql = "INSERT INTO HocTap (MaSV, MaMH, TinChi, DiemThi) VALUES (?, ?, ?, ?)";
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ps.setString(1, ht.getMaSV());
+                ps.setString(2, ht.getMaMH());
+                ps.setInt(3, ht.getTinChi());
+                ps.setDouble(4, ht.getDiemThi());
+                ps.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Thêm thành công!");
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Lỗi lưu điểm vào SQL: " + ex.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Bạn đã hủy thao tác!");
+            return;
+        }
 
-for (HocTap ht : listht) {
-    if (ht.getMaSV().equals(maSV) && ht.getMaMH().equals(maMH)) {
-        JOptionPane.showMessageDialog(null, "Sinh viên này đã có điểm môn học này");
-        return;
-    }
-}
+        hienThiLenBangHT();
+    }//GEN-LAST:event_htbtThemActionPerformed
 
-try {
-    double diem = Double.parseDouble(diemThi);
 
-    HocTap ht = new HocTap();
-    ht.setMaSV(maSV);
-    ht.setMaMH(maMH);
-    ht.setDiemThi(diem);
-    ht.setTinChi(soTin);
-
-    listht.add(ht);
-    try (Connection conn = DBConnection.getConnection()) {
-    String sql = "INSERT INTO HocTap (MaSV, MaMH, TinChi, DiemThi) VALUES (?, ?, ?, ?)";
-    PreparedStatement ps = conn.prepareStatement(sql);
-    ps.setString(1, ht.getMaSV());
-    ps.setString(2, ht.getMaMH());
-    ps.setInt(3, ht.getTinChi());
-    ps.setDouble(4, ht.getDiemThi());
-    ps.executeUpdate();
-} catch (SQLException ex) {
-    ex.printStackTrace();
-    JOptionPane.showMessageDialog(null, "Lỗi lưu điểm vào SQL: " + ex.getMessage());
-}
-    hienThiLenBangHT(); 
-} catch (NumberFormatException e) {
-    JOptionPane.showMessageDialog(null, "Điểm phải là số hợp lệ (ví dụ: 7.5)");
-}
-    }//GEN-LAST:event_htbtTimKiemActionPerformed
-
-    
     private void httxtMaMonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_httxtMaMonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_httxtMaMonActionPerformed
@@ -1072,37 +1181,119 @@ try {
         // TODO add your handling code here:
     }//GEN-LAST:event_htbtTimKiem3ActionPerformed
 
-    private void htbtTinhTBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_htbtTinhTBActionPerformed
-        String ma = httxtMaSinhVien.getText();
+    private double tinhDiemTB(String ma) {
         double diemtb = 0;
         int tongTin = 0;
         for (HocTap ht : listht) {
-            if(ma.equalsIgnoreCase(ht.getMaSV()))
-            {
-                diemtb = diemtb + ht.getDiemThi()*ht.getTinChi();
+            if (ma.equalsIgnoreCase(ht.getMaSV())) {
+                diemtb = diemtb + ht.getDiemThi() * ht.getTinChi();
                 tongTin = tongTin + ht.getTinChi();
-            }        
+            }
         }
-        String diemTBFormatted = String.format("%.2f", diemtb / tongTin);
-        JOptionPane.showMessageDialog(null, "Điểm trung bình của sinh viên này: " + diemTBFormatted);
-    }//GEN-LAST:event_htbtTinhTBActionPerformed
+        return diemtb / tongTin;
+    }
 
-    private void htbtHienThiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_htbtHienThiActionPerformed
-        int kiemTraSV = searchMaSinhVien(httxtMaSinhVien.getText());
+    private String tinhHocLuc(double diemCuoi) {
+        if (diemCuoi < 3.5 && diemCuoi >= 0) {
+            return "Kém";
+        } else if (diemCuoi < 5) {
+            return "Yếu";
+        } else if (diemCuoi < 6.5) {
+            return "Trung bình";
+        } else if (diemCuoi < 8) {
+            return "Khá";
+        } else if (diemCuoi <= 10) {
+            return "Giỏi";
+        } else {
+            return null;
+        }
+    }
+
+    private void htbtTinhTBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_htbtTinhTBActionPerformed
+        String maSV = httxtMaSinhVien.getText().trim();
+        if (maSV.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập mã sinh viên");
+            return;
+        }
+        int kiemTraSV = searchMaSinhVien(maSV);
         if (kiemTraSV == -1) {
             JOptionPane.showMessageDialog(null, "Mã sinh viên không tồn tại");
+            return;
         }
-        else
-        hienThiLenBangHT();      
-    }//GEN-LAST:event_htbtHienThiActionPerformed
+        double diemCuoi = tinhDiemTB(httxtMaSinhVien.getText());
+        String hocLuc = tinhHocLuc(diemCuoi);
+        if (Double.isNaN(diemCuoi)) {
+            JOptionPane.showMessageDialog(null, "Sinh viên này chưa có điểm");
+            return;
+        }
+        String diemTBFormatted = String.format("%.2f", diemCuoi);
+        JOptionPane.showMessageDialog(null, "Điểm trung bình của sinh viên này: " + diemTBFormatted + "\nHọc lực: " + hocLuc);
+    }//GEN-LAST:event_htbtTinhTBActionPerformed
+
+    private void htbtTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_htbtTimKiemActionPerformed
+        String maSV = httxtMaSinhVien.getText().trim();
+        if (maSV.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập mã sinh viên");
+            return;
+        }
+        int kiemTraSV = searchMaSinhVien(maSV);
+        if (kiemTraSV == -1) {
+            JOptionPane.showMessageDialog(null, "Mã sinh viên không tồn tại");
+        } else {
+            JOptionPane.showMessageDialog(null, "Tìm kiếm thành công");
+            hienThiLenBangHT();
+        }
+    }//GEN-LAST:event_htbtTimKiemActionPerformed
 
     private void svtxtNgaySinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_svtxtNgaySinhActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_svtxtNgaySinhActionPerformed
-    public void kiemTraDangNhap(boolean check)
-    {
+
+    private void htbtPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_htbtPrintActionPerformed
+        String maSV = httxtMaSinhVien.getText().trim();
+        if (maSV.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập mã sinh viên");
+            return;
+        }
+        int kiemTraSV = searchMaSinhVien(maSV);
+        if (kiemTraSV == -1) {
+            JOptionPane.showMessageDialog(null, "Mã sinh viên không tồn tại");
+            return;
+        }
+        double diemCuoi = tinhDiemTB(httxtMaSinhVien.getText());
+        if (Double.isNaN(diemCuoi)) {
+            JOptionPane.showMessageDialog(null, "Sinh viên này chưa có điểm");
+            return;
+        }
+        String hocLuc = tinhHocLuc(diemCuoi);
+        String diemTBFormatted = String.format("%.2f", diemCuoi);
+        int index = searchMaSinhVien(httxtMaSinhVien.getText());
+        sv = list.get(index);
+        if (hocLuc.equals("Khá") || hocLuc.equals("Giỏi")) {
+            try {
+                BufferedWriter writer = new BufferedWriter(new FileWriter("BangKhen.txt"));
+                writer.write("==== BẰNG KHEN SINH VIÊN ====\n");
+                writer.write("Mã sinh viên: " + sv.getMaSinhVien() + "\n");
+                writer.write("Tên sinh viên: " + sv.getTenSinhVien() + "\n");
+                writer.write("Quê quán: " + sv.getQueQuan() + "\n");
+                writer.write("Điểm trung bình: " + diemTBFormatted + "\n");
+                writer.write("Học lực: " + hocLuc + "\n");
+                writer.write("==============================\n");
+                writer.close();
+
+                JOptionPane.showMessageDialog(null, "Đã lưu bằng khen vào file BangKhen.txt");
+
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(null, "Lỗi ghi file: " + e.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Chưa đủ điều kiện in bằng");
+        }
+    }//GEN-LAST:event_htbtPrintActionPerformed
+    public void kiemTraDangNhap(boolean check) {
         tabNavigate.setVisible(check);
     }
+
     /**
      * @param args the command line arguments
      */
@@ -1143,7 +1334,8 @@ try {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTable htTbDiemThi;
-    private javax.swing.JButton htbtHienThi;
+    private javax.swing.JButton htbtPrint;
+    private javax.swing.JButton htbtThem;
     private javax.swing.JButton htbtTimKiem;
     private javax.swing.JButton htbtTimKiem1;
     private javax.swing.JButton htbtTimKiem3;
