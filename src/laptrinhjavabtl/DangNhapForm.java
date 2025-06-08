@@ -107,7 +107,12 @@ public class DangNhapForm extends javax.swing.JFrame {
     private void txtTaiKhoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTaiKhoanActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTaiKhoanActionPerformed
-
+    
+    private boolean dangNhapThanhCong = false;
+    public boolean isDangNhapThanhCong() {
+        return dangNhapThanhCong;
+    }
+    
     private void btDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDangNhapActionPerformed
         String kiemTra1 = txtTaiKhoan.getText();
         String kiemTra2 = txtMatKhau.getText();
@@ -117,6 +122,7 @@ public class DangNhapForm extends javax.swing.JFrame {
         {
             JOptionPane.showMessageDialog(null, "Đăng nhập hoàn tất");
             QuanLySinhVienGUI.getInstance().kiemTraDangNhap(true);
+            dangNhapThanhCong = true;
             this.dispose(); 
         }
         else

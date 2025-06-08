@@ -198,20 +198,6 @@ public class QuanLySinhVienGUI extends javax.swing.JFrame {
         svbtSua = new javax.swing.JButton();
         svbtXoa = new javax.swing.JButton();
         svbtThem = new javax.swing.JButton();
-        tabQuanLyMonHoc = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        mhcbSoTin = new javax.swing.JComboBox<>();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        mhtxtMaMonHoc = new javax.swing.JTextField();
-        mhtxtTenMonHoc = new javax.swing.JTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        mhtbMonHoc = new javax.swing.JTable();
-        mhbtTimKiem = new javax.swing.JButton();
-        mhbtSua = new javax.swing.JButton();
-        mhbtXoa = new javax.swing.JButton();
-        mhbtThem = new javax.swing.JButton();
         tabQuanLyDiem = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
@@ -226,6 +212,20 @@ public class QuanLySinhVienGUI extends javax.swing.JFrame {
         htbtTinhTB = new javax.swing.JButton();
         htbtTimKiem = new javax.swing.JButton();
         htbtPrint = new javax.swing.JButton();
+        tabQuanLyMonHoc = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        mhcbSoTin = new javax.swing.JComboBox<>();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        mhtxtMaMonHoc = new javax.swing.JTextField();
+        mhtxtTenMonHoc = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        mhtbMonHoc = new javax.swing.JTable();
+        mhbtTimKiem = new javax.swing.JButton();
+        mhbtSua = new javax.swing.JButton();
+        mhbtXoa = new javax.swing.JButton();
+        mhbtThem = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
@@ -234,7 +234,7 @@ public class QuanLySinhVienGUI extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        menuItemQuanLySV = new javax.swing.JMenuItem();
+        menuItemDangNhap = new javax.swing.JMenuItem();
 
         jLabel5.setText("Mã sinh viên");
 
@@ -389,148 +389,6 @@ public class QuanLySinhVienGUI extends javax.swing.JFrame {
 
         tabNavigate.addTab("Quản lý sinh viên", tabQuanLySinhVien);
 
-        tabQuanLyMonHoc.setBackground(new java.awt.Color(204, 255, 204));
-        tabQuanLyMonHoc.setBorder(new javax.swing.border.MatteBorder(null));
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(51, 153, 0));
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/subject.png"))); // NOI18N
-        jLabel2.setText("QUẢN LÝ MÔN HỌC");
-
-        jLabel10.setText("Mã môn học");
-
-        mhcbSoTin.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
-        mhcbSoTin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mhcbSoTinActionPerformed(evt);
-            }
-        });
-
-        jLabel11.setText("Tên môn học");
-
-        jLabel12.setText("Số tín");
-
-        mhtbMonHoc.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Mã môn học", "Tên môn học", "Số tín"
-            }
-        ));
-        mhtbMonHoc.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                mhtbMonHocMouseClicked(evt);
-            }
-        });
-        jScrollPane2.setViewportView(mhtbMonHoc);
-
-        mhbtTimKiem.setBackground(new java.awt.Color(255, 255, 204));
-        mhbtTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search.png"))); // NOI18N
-        mhbtTimKiem.setText("Tìm kiếm");
-        mhbtTimKiem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mhbtTimKiemActionPerformed(evt);
-            }
-        });
-
-        mhbtSua.setBackground(new java.awt.Color(255, 255, 204));
-        mhbtSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/repair.png"))); // NOI18N
-        mhbtSua.setText("Sửa");
-        mhbtSua.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mhbtSuaActionPerformed(evt);
-            }
-        });
-
-        mhbtXoa.setBackground(new java.awt.Color(255, 255, 204));
-        mhbtXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Delete.png"))); // NOI18N
-        mhbtXoa.setText("Xoá");
-        mhbtXoa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mhbtXoaActionPerformed(evt);
-            }
-        });
-
-        mhbtThem.setBackground(new java.awt.Color(255, 255, 204));
-        mhbtThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add.png"))); // NOI18N
-        mhbtThem.setText("Thêm");
-        mhbtThem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mhbtThemActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout tabQuanLyMonHocLayout = new javax.swing.GroupLayout(tabQuanLyMonHoc);
-        tabQuanLyMonHoc.setLayout(tabQuanLyMonHocLayout);
-        tabQuanLyMonHocLayout.setHorizontalGroup(
-            tabQuanLyMonHocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabQuanLyMonHocLayout.createSequentialGroup()
-                .addGap(0, 631, Short.MAX_VALUE)
-                .addComponent(mhbtXoa)
-                .addGap(82, 82, 82))
-            .addGroup(tabQuanLyMonHocLayout.createSequentialGroup()
-                .addGroup(tabQuanLyMonHocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(tabQuanLyMonHocLayout.createSequentialGroup()
-                        .addGap(70, 70, 70)
-                        .addGroup(tabQuanLyMonHocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(tabQuanLyMonHocLayout.createSequentialGroup()
-                                .addGroup(tabQuanLyMonHocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel10)
-                                    .addComponent(jLabel11)
-                                    .addComponent(jLabel12))
-                                .addGap(18, 18, 18)
-                                .addGroup(tabQuanLyMonHocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(mhtxtMaMonHoc, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(mhtxtTenMonHoc, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(mhcbSoTin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(tabQuanLyMonHocLayout.createSequentialGroup()
-                                .addComponent(mhbtThem)
-                                .addGap(87, 87, 87)
-                                .addComponent(mhbtTimKiem)
-                                .addGap(85, 85, 85)
-                                .addComponent(mhbtSua))))
-                    .addGroup(tabQuanLyMonHocLayout.createSequentialGroup()
-                        .addGap(279, 279, 279)
-                        .addComponent(jLabel2))
-                    .addGroup(tabQuanLyMonHocLayout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 705, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        tabQuanLyMonHocLayout.setVerticalGroup(
-            tabQuanLyMonHocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tabQuanLyMonHocLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(tabQuanLyMonHocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(mhtxtMaMonHoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addGroup(tabQuanLyMonHocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(mhtxtTenMonHoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11))
-                .addGap(18, 18, 18)
-                .addGroup(tabQuanLyMonHocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12)
-                    .addComponent(mhcbSoTin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(tabQuanLyMonHocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(mhbtThem)
-                    .addComponent(mhbtXoa)
-                    .addComponent(mhbtSua)
-                    .addComponent(mhbtTimKiem))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35))
-        );
-
-        tabNavigate.addTab("Quản lý môn học", tabQuanLyMonHoc);
-
         tabQuanLyDiem.setBackground(new java.awt.Color(204, 255, 204));
         tabQuanLyDiem.setBorder(new javax.swing.border.MatteBorder(null));
 
@@ -680,6 +538,148 @@ public class QuanLySinhVienGUI extends javax.swing.JFrame {
 
         tabNavigate.addTab("Quản lý điểm", tabQuanLyDiem);
 
+        tabQuanLyMonHoc.setBackground(new java.awt.Color(204, 255, 204));
+        tabQuanLyMonHoc.setBorder(new javax.swing.border.MatteBorder(null));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(51, 153, 0));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/subject.png"))); // NOI18N
+        jLabel2.setText("QUẢN LÝ MÔN HỌC");
+
+        jLabel10.setText("Mã môn học");
+
+        mhcbSoTin.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
+        mhcbSoTin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mhcbSoTinActionPerformed(evt);
+            }
+        });
+
+        jLabel11.setText("Tên môn học");
+
+        jLabel12.setText("Số tín");
+
+        mhtbMonHoc.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Mã môn học", "Tên môn học", "Số tín"
+            }
+        ));
+        mhtbMonHoc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mhtbMonHocMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(mhtbMonHoc);
+
+        mhbtTimKiem.setBackground(new java.awt.Color(255, 255, 204));
+        mhbtTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search.png"))); // NOI18N
+        mhbtTimKiem.setText("Tìm kiếm");
+        mhbtTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mhbtTimKiemActionPerformed(evt);
+            }
+        });
+
+        mhbtSua.setBackground(new java.awt.Color(255, 255, 204));
+        mhbtSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/repair.png"))); // NOI18N
+        mhbtSua.setText("Sửa");
+        mhbtSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mhbtSuaActionPerformed(evt);
+            }
+        });
+
+        mhbtXoa.setBackground(new java.awt.Color(255, 255, 204));
+        mhbtXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Delete.png"))); // NOI18N
+        mhbtXoa.setText("Xoá");
+        mhbtXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mhbtXoaActionPerformed(evt);
+            }
+        });
+
+        mhbtThem.setBackground(new java.awt.Color(255, 255, 204));
+        mhbtThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add.png"))); // NOI18N
+        mhbtThem.setText("Thêm");
+        mhbtThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mhbtThemActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout tabQuanLyMonHocLayout = new javax.swing.GroupLayout(tabQuanLyMonHoc);
+        tabQuanLyMonHoc.setLayout(tabQuanLyMonHocLayout);
+        tabQuanLyMonHocLayout.setHorizontalGroup(
+            tabQuanLyMonHocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabQuanLyMonHocLayout.createSequentialGroup()
+                .addGap(0, 631, Short.MAX_VALUE)
+                .addComponent(mhbtXoa)
+                .addGap(82, 82, 82))
+            .addGroup(tabQuanLyMonHocLayout.createSequentialGroup()
+                .addGroup(tabQuanLyMonHocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(tabQuanLyMonHocLayout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addGroup(tabQuanLyMonHocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(tabQuanLyMonHocLayout.createSequentialGroup()
+                                .addGroup(tabQuanLyMonHocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel10)
+                                    .addComponent(jLabel11)
+                                    .addComponent(jLabel12))
+                                .addGap(18, 18, 18)
+                                .addGroup(tabQuanLyMonHocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(mhtxtMaMonHoc, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(mhtxtTenMonHoc, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(mhcbSoTin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(tabQuanLyMonHocLayout.createSequentialGroup()
+                                .addComponent(mhbtThem)
+                                .addGap(87, 87, 87)
+                                .addComponent(mhbtTimKiem)
+                                .addGap(85, 85, 85)
+                                .addComponent(mhbtSua))))
+                    .addGroup(tabQuanLyMonHocLayout.createSequentialGroup()
+                        .addGap(279, 279, 279)
+                        .addComponent(jLabel2))
+                    .addGroup(tabQuanLyMonHocLayout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 705, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        tabQuanLyMonHocLayout.setVerticalGroup(
+            tabQuanLyMonHocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tabQuanLyMonHocLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(tabQuanLyMonHocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(mhtxtMaMonHoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
+                .addGroup(tabQuanLyMonHocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(mhtxtTenMonHoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11))
+                .addGap(18, 18, 18)
+                .addGroup(tabQuanLyMonHocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(mhcbSoTin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(tabQuanLyMonHocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(mhbtThem)
+                    .addComponent(mhbtXoa)
+                    .addComponent(mhbtSua)
+                    .addComponent(mhbtTimKiem))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35))
+        );
+
+        tabNavigate.addTab("Quản lý môn học", tabQuanLyMonHoc);
+
         getContentPane().add(tabNavigate, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 550));
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0,120));
@@ -739,13 +739,14 @@ public class QuanLySinhVienGUI extends javax.swing.JFrame {
 
         jMenu1.setText("Chức năng");
 
-        menuItemQuanLySV.setText("Đăng nhập");
-        menuItemQuanLySV.addActionListener(new java.awt.event.ActionListener() {
+        menuItemDangNhap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/login.png"))); // NOI18N
+        menuItemDangNhap.setText("Đăng nhập");
+        menuItemDangNhap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItemQuanLySVActionPerformed(evt);
+                menuItemDangNhapActionPerformed(evt);
             }
         });
-        jMenu1.add(menuItemQuanLySV);
+        jMenu1.add(menuItemDangNhap);
 
         jMenuBar1.add(jMenu1);
 
@@ -755,11 +756,28 @@ public class QuanLySinhVienGUI extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-
-    private void menuItemQuanLySVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemQuanLySVActionPerformed
-        DangNhapForm sv = new DangNhapForm();
-        sv.setVisible(true);
-    }//GEN-LAST:event_menuItemQuanLySVActionPerformed
+    public void kiemTraDangNhap(boolean daDangNhap) {
+        if (daDangNhap) {
+            menuItemDangNhap.setText("Đăng xuất");
+            menuItemDangNhap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logout.png")));
+            tabNavigate.setVisible(true);
+        } else {
+            menuItemDangNhap.setText("Đăng nhập");
+            menuItemDangNhap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/login.png")));
+            tabNavigate.setVisible(false);
+        }
+    }
+    private void menuItemDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemDangNhapActionPerformed
+        if (menuItemDangNhap.getText().equals("Đăng nhập")) {
+            DangNhapForm sv = new DangNhapForm();
+            sv.setVisible(true);
+        } else {
+            int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn đăng xuất?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                kiemTraDangNhap(false);
+            }
+        }
+    }//GEN-LAST:event_menuItemDangNhapActionPerformed
 
     private void tabNavigateComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_tabNavigateComponentAdded
 
@@ -787,7 +805,7 @@ public class QuanLySinhVienGUI extends javax.swing.JFrame {
                 return i;
             }
         }
-        return -1; // không tìm thấy
+        return -1;
     }
 
     private void svbtThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_svbtThemActionPerformed
@@ -931,7 +949,6 @@ public class QuanLySinhVienGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_svtbDanhSachMouseClicked
 
-// ----------------------------- MON HOC
     public int searchMaMonHoc(String ma) {
         for (int i = 0; i < listmh.size(); i++) {
             if (listmh.get(i).getMaMonHoc().equalsIgnoreCase(ma)) {
@@ -974,14 +991,13 @@ public class QuanLySinhVienGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_mhbtThemActionPerformed
 
     private void mhbtTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mhbtTimKiemActionPerformed
-        kiemTra = -1;
         if (mhtxtMaMonHoc.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Nhập mã môn học để tìm kiếm ");
             return;
         }
         kiemTra = searchMaMonHoc(mhtxtMaMonHoc.getText());
-        mh = listmh.get(kiemTra);
         if (kiemTra > -1) {
+            mh = listmh.get(kiemTra);
             JOptionPane.showMessageDialog(null, "Mã môn học: " + mh.getMaMonHoc() + "\nTên môn học: " + mh.getTenMonHoc() + "\nSố tín: " + mh.getSoTin());
         } else {
             JOptionPane.showMessageDialog(null, "Mã môn học chưa tồn tại");
@@ -1278,9 +1294,6 @@ public class QuanLySinhVienGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Chưa đủ điều kiện in bằng");
         }
     }//GEN-LAST:event_htbtPrintActionPerformed
-    public void kiemTraDangNhap(boolean check) {
-        tabNavigate.setVisible(check);
-    }
 
     /**
      * @param args the command line arguments
@@ -1359,7 +1372,7 @@ public class QuanLySinhVienGUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField jTextField8;
-    private javax.swing.JMenuItem menuItemQuanLySV;
+    private javax.swing.JMenuItem menuItemDangNhap;
     private javax.swing.JButton mhbtSua;
     private javax.swing.JButton mhbtThem;
     private javax.swing.JButton mhbtTimKiem;
